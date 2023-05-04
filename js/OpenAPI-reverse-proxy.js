@@ -4,10 +4,6 @@ const TELEGRAPH_URL = 'https://api.openai.com';
 // 定义允许的HTTP方法
 const ALLOWED_METHODS = ['GET', 'POST'];
 
-// 定义允许发起代理请求的来源域名列表
-//注意，这里例子写的是我的博客链接，使用时请务必修改为你用于反代API的URL，当然你也可以删除本行限制
-const ALLOWED_ORIGINS = ['https://www.wqzs.vip'];
-
 // 为每个传入的请求添加事件监听器
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
@@ -29,12 +25,6 @@ async function handleRequest(request) {
     if (!ALLOWED_METHODS.includes(method)) {
       // 如果不在允许的方法列表中，返回405状态码
       return new Response('Method Not Allowed', { status: 405 });
-    }
-
-    // 检查请求的来源域是否在允许的来源域名列表中
-    if (!ALLOWED_ORIGINS.includes(origin)) {
-      // 如果不在允许的来源域名列表中，返回403状态码
-      return new Response('Forbidden', { status: 403 });
     }
 
     // 修改请求的目标主机
